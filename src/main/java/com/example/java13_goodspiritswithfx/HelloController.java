@@ -7,6 +7,10 @@ import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.effect.Effect;
+import javafx.scene.effect.Light;
+import javafx.scene.effect.Lighting;
+import javafx.scene.effect.Shadow;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -60,7 +64,6 @@ public class HelloController {
                     Label namePlanet = new Label(planet.toString());
                     namePlanet.setFont(Font.font(FONT_SIZE));
                     namePlanet.setFont(Font.font("Tahoma", FontWeight.BOLD, 15));
-
 
                     Circle planetBody = new Circle(PLANET_RADIUS);
                     planetBody.setFill(Color.BLUE);
@@ -134,31 +137,17 @@ public class HelloController {
             Line line = new Line(point2DFrom.getX(), point2DFrom.getY(), point2DTo.getX(), point2DTo.getY());
             Label label = new Label(String.valueOf(tonnel.cost));
             label.setFont(Font.font(FONT_SIZE));
-            label.setFont(Font.font("Tahoma", FontWeight.BOLD, 15));
+            label.setFont(Font.font("Tahoma", 15));
             label.setTextFill(Color.DARKGREEN);
             label.setLayoutX(((point2DFrom.getX() + point2DTo.getX()) / 2));
             label.setLayoutY(((point2DFrom.getY() + point2DTo.getY()) / 2));
 
-            anchorPainSub.getChildren().add(line);
-            anchorPainSub.getChildren().add(label);
-        }
-
-        for (Tonnel bestTonnel : bestSpacePath.steps){
-            Planet from = bestTonnel.from;
-            Point2D point2DFrom = mapList.get(from).localToScene(mapList.get(from).getLayoutBounds().getCenterX(), mapList.get(from).getLayoutBounds().getCenterY());
-
-            Planet to = bestTonnel.to;
-            Point2D point2DTo = mapList.get(to).localToScene(mapList.get(to).getLayoutBounds().getCenterX(), mapList.get(to).getLayoutBounds().getCenterY());
-
-            Line line = new Line(point2DFrom.getX(), point2DFrom.getY(), point2DTo.getX(), point2DTo.getY());
-            line.setStroke(Color.RED);
-            line.setStrokeWidth(3);
-            Label label = new Label(String.valueOf(bestTonnel.cost));
-            label.setFont(Font.font(FONT_SIZE));
-            label.setFont(Font.font("Tahoma", FontWeight.BOLD, 15));
-            label.setTextFill(Color.RED);
-            label.setLayoutX(((point2DFrom.getX() + point2DTo.getX()) / 2));
-            label.setLayoutY(((point2DFrom.getY() + point2DTo.getY()) / 2));
+            if (bestSpacePath.steps.contains(tonnel)) {
+                line.setStroke(Color.ORANGE);
+                line.setStrokeWidth(3);
+                label.setTextFill(Color.RED);
+                label.setFont(Font.font("Tahoma",FontWeight.BOLD, 20));
+            }
 
             anchorPainSub.getChildren().add(line);
             anchorPainSub.getChildren().add(label);
