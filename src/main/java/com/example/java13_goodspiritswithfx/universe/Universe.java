@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 
 public class Universe {
     public List<LevelOfUniverse> listLevels;
+
     public Universe(String fname) {
         LevelOfUniverse zero = new LevelOfUniverse(0, 1);
         LevelOfUniverse prev = zero;
@@ -38,6 +39,7 @@ public class Universe {
         Collections.reverse(theBestPath.steps);
         return theBestPath;
     }
+
     public ArrayList<SpacePath> generatePathList() {
         ArrayList<SpacePath> pathList = new ArrayList<>();
         SpacePath path = new SpacePath();
@@ -47,6 +49,7 @@ public class Universe {
 
         return pathList;
     }
+
     public void findPath(Planet current, Planet finish, SpacePath previousPath, ArrayList<SpacePath> pathList) {
         SpacePath currentPath;
         if (current.equals(finish)) {
@@ -58,5 +61,16 @@ public class Universe {
                 findPath(t.from, finish, currentPath, pathList);
             }
         }
+    }
+
+    public ArrayList<Tonnel> getTonnelList(ArrayList<Tonnel> tonnels) {
+        for (LevelOfUniverse levelOfUniverse : listLevels) {
+            for (Planet planet : levelOfUniverse.getPlanets()) {
+                for (Tonnel tonnel : planet.tonnels) {
+                    tonnels.add(tonnel);
+                }
+            }
+        }
+        return tonnels;
     }
 }

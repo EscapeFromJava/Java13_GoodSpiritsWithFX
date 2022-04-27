@@ -2,7 +2,7 @@ package com.example.java13_goodspiritswithfx.universe;
 
 import java.util.ArrayList;
 public class SpacePath {
-    ArrayList<Tonnel> steps = new ArrayList<>();
+    public ArrayList<Tonnel> steps = new ArrayList<>();
 
     public int getTotalCost(){
         int s =0;

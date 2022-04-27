@@ -5,10 +5,15 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.java13_goodspiritswithfx.HelloController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.java13_goodspiritswithfx.HelloController">
+   <VBox fx:id="vBoxGraphic" alignment="CENTER" layoutX="600.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="800.0" prefWidth="600.0" style="-fx-background-color: lightblue;" />
+   <AnchorPane fx:id="anchorPainSub" />
+   <Button fx:id="btnCreatePlanets" layoutX="417.0" layoutY="86.0" mnemonicParsing="false" onAction="#onButtonCreatePlanetsClick" prefWidth="100.0" text="Create Planets" />
+   <Label fx:id="lblResult" alignment="TOP_LEFT" layoutX="78.0" layoutY="472.0" prefHeight="250.0" prefWidth="200.0" textAlignment="JUSTIFY" wrapText="true" />
+   <Button fx:id="btnCreatePaths" layoutX="417.0" layoutY="127.0" mnemonicParsing="false" onAction="#onButtonCreatePathsClick" prefWidth="100.0" text="Create Path" />
    <TextArea fx:id="txtArea" layoutX="28.0" layoutY="71.0" prefHeight="350.0" prefWidth="300.0" />
-   <Button fx:id="btnCreate" layoutX="435.0" layoutY="101.0" mnemonicParsing="false" onAction="#onCreateButtonClick" text="Create" />
-   <Label fx:id="lblResult" alignment="TOP_LEFT" layoutX="372.0" layoutY="171.0" prefHeight="250.0" prefWidth="200.0" textAlignment="JUSTIFY" wrapText="true" />
-   <ComboBox fx:id="comboBoxList" layoutX="28.0" layoutY="26.0" onAction="#onPlanetListClick" prefHeight="25.0" prefWidth="300.0" promptText="Choose a universe:" />
+   <ComboBox fx:id="comboBoxListPlanet" layoutX="28.0" layoutY="26.0" onAction="#onComboBoxListPlanetClick" prefHeight="25.0" prefWidth="300.0" promptText="Choose a universe:" />
+   <Button fx:id="btnClear" layoutX="417.0" layoutY="212.0" mnemonicParsing="false" onAction="#onButtonClearClick" prefWidth="100.0" text="Clear" />
 </AnchorPane>

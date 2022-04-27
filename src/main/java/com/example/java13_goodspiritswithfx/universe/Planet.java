@@ -2,7 +2,7 @@ package com.example.java13_goodspiritswithfx.universe;
 
 public class Planet {
     String name;
-    Tonnel[] tonnels;
+    public Tonnel[] tonnels;
 
     public Planet(){}
 
@@ -13,8 +13,6 @@ public class Planet {
 
     @Override
     public String toString() {
-        return "P{" +
-                " " + name +
-                " }";
+        return name;
     }
 }
