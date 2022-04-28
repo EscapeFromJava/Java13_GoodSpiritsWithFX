@@ -7,10 +7,9 @@ import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.effect.Effect;
-import javafx.scene.effect.Light;
-import javafx.scene.effect.Lighting;
-import javafx.scene.effect.Shadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -29,13 +28,15 @@ public class HelloController {
     @FXML
     AnchorPane anchorPainSub;
     @FXML
-    Button btnCreatePlanets, btnCreatePaths, btnClear;
+    Button btnCreatePlanets, btnCreatePaths;
     @FXML
     ComboBox comboBoxListPlanet;
     @FXML
     Label lblResult;
     @FXML
     TextArea txtArea;
+    @FXML
+    TextField textFieldVerticalSpacing, textFieldPlanetRadius, textFieldHorizontalSpacing;
     @FXML
     VBox vBoxGraphic;
     ArrayList<Tonnel> tonnelList = new ArrayList<>();
@@ -45,16 +46,38 @@ public class HelloController {
     SpacePath bestSpacePath;
     Universe universe;
 
-    double VERTICAL_SPASING = 50;
-    double HORIZONTAL_SPACING = 100;
-    double PLANET_RADIUS = 15;
+    double VERTICAL_SPASING;
+    double HORIZONTAL_SPACING;
+    double PLANET_RADIUS;
 
     int FONT_SIZE = 15;
 
+    private void initializeComboBoxListPlanet() {
+        File dir = new File(getClass().getClassLoader().getResource("inputData").getFile());
+        File[] arrFiles = dir.listFiles();
+        List<File> lst = Arrays.asList(arrFiles);
+
+        universeList = FXCollections.observableArrayList();
+        for (var el : lst) {
+            universeList.add(el.getName().split("\\.")[0]);
+        }
+        comboBoxListPlanet.setItems(universeList);
+    }
+
+    private void initializeParameterFields() {
+        VERTICAL_SPASING = Double.parseDouble(textFieldVerticalSpacing.getText());
+        HORIZONTAL_SPACING = Double.parseDouble(textFieldHorizontalSpacing.getText());
+        PLANET_RADIUS = Double.parseDouble(textFieldPlanetRadius.getText());
+        vBoxGraphic.setSpacing(VERTICAL_SPASING);
+
+    }
+
     public void initialize() {
         initializeComboBoxListPlanet();
-        vBoxGraphic.setSpacing(VERTICAL_SPASING);
+        initializeParameterFields();
         lblResult.textProperty().addListener((observableValue, s, t1) -> {
+            ImageView imageViewIvan = new ImageView(new Image(HelloApplication.class.getResourceAsStream("/images/ivan.png")));
+            vBoxGraphic.getChildren().add(imageViewIvan);
             HBox hBoxCurrentLevel;
             for (LevelOfUniverse currentLevel : universe.listLevels) {
                 hBoxCurrentLevel = new HBox();
@@ -81,21 +104,13 @@ public class HelloController {
                 vBoxGraphic.getChildren().add(0, hBoxCurrentLevel);
             }
         });
+        txtArea.textProperty().addListener((observableValue, s, t1) -> {
+            btnCreatePlanets.setDisable(false);
+        });
     }
-
-    private void initializeComboBoxListPlanet() {
-        File dir = new File(getClass().getClassLoader().getResource("inputData").getFile());
-        File[] arrFiles = dir.listFiles();
-        List<File> lst = Arrays.asList(arrFiles);
-
-        universeList = FXCollections.observableArrayList();
-        for (var el : lst) {
-            universeList.add(el.getName().split("\\.")[0]);
-        }
-        comboBoxListPlanet.setItems(universeList);
-    }
-
+    
     public void onComboBoxListPlanetClick() {
+        clearData();
         int indexOfUniverse = comboBoxListPlanet.getSelectionModel().getSelectedIndex();
         File dir = new File(getClass().getClassLoader().getResource("inputData").getFile());
         File[] arrFiles = dir.listFiles();
@@ -110,23 +125,22 @@ public class HelloController {
     }
 
     public void onButtonCreatePlanetsClick() throws InterruptedException {
-        clearData();
-
+        initializeParameterFields();
         String text = txtArea.getText();
         universe = new Universe(text);
         universe.getTonnelList(tonnelList);
         bestSpacePath = universe.findBestPath();
         lblResult.setText(String.valueOf(universe.findBestPath()));
-    }
-
-    private void clearData() {
-        vBoxGraphic.getChildren().clear();
-        anchorPainSub.getChildren().clear();
-        tonnelList.clear();
-        bestSpacePath = new SpacePath();
+        btnCreatePaths.setDisable(false);
+        btnCreatePlanets.setDisable(true);
     }
 
     public void onButtonCreatePathsClick() {
+        createPaths();
+    }
+
+    public void createPaths() {
+        btnCreatePaths.setDisable(true);
         for (Tonnel tonnel : tonnelList) {
             Planet from = tonnel.from;
             Point2D point2DFrom = mapList.get(from).localToScene(mapList.get(from).getLayoutBounds().getCenterX(), mapList.get(from).getLayoutBounds().getCenterY());
@@ -139,22 +153,30 @@ public class HelloController {
             label.setFont(Font.font(FONT_SIZE));
             label.setFont(Font.font("Tahoma", 15));
             label.setTextFill(Color.DARKGREEN);
-            label.setLayoutX(((point2DFrom.getX() + point2DTo.getX()) / 2));
+            label.setLayoutX(((point2DFrom.getX() + point2DTo.getX()) / 2) - PLANET_RADIUS * 2);
             label.setLayoutY(((point2DFrom.getY() + point2DTo.getY()) / 2));
 
             if (bestSpacePath.steps.contains(tonnel)) {
                 line.setStroke(Color.ORANGE);
                 line.setStrokeWidth(3);
                 label.setTextFill(Color.RED);
-                label.setFont(Font.font("Tahoma",FontWeight.BOLD, 20));
-            }
+                label.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
+                label.setLayoutX(((point2DFrom.getX() + point2DTo.getX()) / 2));
+            } else
+                line.getStrokeDashArray().addAll(20.0);
 
             anchorPainSub.getChildren().add(line);
             anchorPainSub.getChildren().add(label);
         }
     }
 
-    public void onButtonClearClick() {
-        clearData();
+    private void clearData() {
+        lblResult.setText("");
+        vBoxGraphic.getChildren().clear();
+        anchorPainSub.getChildren().clear();
+        tonnelList.clear();
+        bestSpacePath = new SpacePath();
+        txtArea.clear();
+
     }
 }

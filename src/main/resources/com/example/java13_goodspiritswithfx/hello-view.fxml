@@ -4,16 +4,22 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.java13_goodspiritswithfx.HelloController">
-   <VBox fx:id="vBoxGraphic" alignment="CENTER" layoutX="600.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="800.0" prefWidth="600.0" style="-fx-background-color: lightblue;" />
+   <VBox fx:id="vBoxGraphic" alignment="CENTER" layoutX="600.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="800.0" prefWidth="600.0" style="-fx-background-color: lightblue;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="600.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
    <AnchorPane fx:id="anchorPainSub" />
-   <Button fx:id="btnCreatePlanets" layoutX="417.0" layoutY="86.0" mnemonicParsing="false" onAction="#onButtonCreatePlanetsClick" prefWidth="100.0" text="Create Planets" />
+   <Button fx:id="btnCreatePlanets" disable="true" layoutX="417.0" layoutY="86.0" mnemonicParsing="false" onAction="#onButtonCreatePlanetsClick" prefWidth="100.0" text="Create Planets" />
    <Label fx:id="lblResult" alignment="TOP_LEFT" layoutX="78.0" layoutY="472.0" prefHeight="250.0" prefWidth="200.0" textAlignment="JUSTIFY" wrapText="true" />
-   <Button fx:id="btnCreatePaths" layoutX="417.0" layoutY="127.0" mnemonicParsing="false" onAction="#onButtonCreatePathsClick" prefWidth="100.0" text="Create Path" />
-   <TextArea fx:id="txtArea" layoutX="28.0" layoutY="71.0" prefHeight="350.0" prefWidth="300.0" />
+   <Button fx:id="btnCreatePaths" disable="true" layoutX="417.0" layoutY="127.0" mnemonicParsing="false" onAction="#onButtonCreatePathsClick" prefWidth="100.0" text="Create Path" />
+   <TextArea fx:id="txtArea" disable="true" layoutX="28.0" layoutY="71.0" prefHeight="350.0" prefWidth="300.0" />
    <ComboBox fx:id="comboBoxListPlanet" layoutX="28.0" layoutY="26.0" onAction="#onComboBoxListPlanetClick" prefHeight="25.0" prefWidth="300.0" promptText="Choose a universe:" />
-   <Button fx:id="btnClear" layoutX="417.0" layoutY="212.0" mnemonicParsing="false" onAction="#onButtonClearClick" prefWidth="100.0" text="Clear" />
+   <TextField fx:id="textFieldVerticalSpacing" alignment="CENTER" layoutX="517.0" layoutY="280.0" prefHeight="25.0" prefWidth="51.0" text="50" />
+   <Label layoutX="358.0" layoutY="283.0" text="VERTICAL_SPASING" />
+   <TextField fx:id="textFieldPlanetRadius" alignment="CENTER" layoutX="517.0" layoutY="348.0" prefHeight="25.0" prefWidth="51.0" text="15" />
+   <Label layoutX="358.0" layoutY="351.0" text="PLANET_RADIUS" />
+   <TextField fx:id="textFieldHorizontalSpacing" alignment="CENTER" layoutX="517.0" layoutY="315.0" prefHeight="25.0" prefWidth="51.0" text="150" />
+   <Label layoutX="358.0" layoutY="318.0" text="HORIZONTAL_SPACING" />
 </AnchorPane>
