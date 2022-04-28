@@ -9,7 +9,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -149,6 +148,7 @@ public class HelloController {
             Point2D point2DTo = mapList.get(to).localToScene(mapList.get(to).getLayoutBounds().getCenterX(), mapList.get(to).getLayoutBounds().getCenterY());
 
             Line line = new Line(point2DFrom.getX(), point2DFrom.getY(), point2DTo.getX(), point2DTo.getY());
+
             Label label = new Label(String.valueOf(tonnel.cost));
             label.setFont(Font.font(FONT_SIZE));
             label.setFont(Font.font("Tahoma", 15));
